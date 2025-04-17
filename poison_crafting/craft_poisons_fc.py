@@ -243,8 +243,7 @@ def main(args):
     return
 
 
-if __name__ == "__main__":
-
+def main2(passed_args):
     parser = argparse.ArgumentParser(description="Feature Collision Poison Attack")
     parser.add_argument(
         "--model", default=["resnet18"], nargs="+", type=str, help="model for training"
@@ -307,6 +306,6 @@ if __name__ == "__main__":
         "--base_indices", nargs="+", default=None, type=int, help="which base images"
     )
 
-    args = parser.parse_args()
+    args = parser.parse_args(passed_args)
 
     main(args)

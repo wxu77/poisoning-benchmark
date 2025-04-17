@@ -185,6 +185,7 @@ def main(args):
             ("training_acc", acc),
             ("natural_acc", natural_acc),
             ("poison_acc", p_acc),
+            ("target_id", args.target_img_idx),
         ]
     )
     to_results_table(stats, args.output)

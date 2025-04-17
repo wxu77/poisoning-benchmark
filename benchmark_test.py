@@ -29,63 +29,58 @@ def main(args):
             f"setting...\n"
         )
 
-        models = {
-            "cifar10": ["resnet18", "VGG11", "MobileNetV2"],
-            "tinyimagenet_last": ["vgg16", "resnet34", "mobilenet_v2"],
-        }[args.dataset.lower()]
-
         ####################################################
         #          Transfer learning
         print("Transfer learning test:")
         print(args)
 
         # white-box attack
-        args.output = os.path.join(out_dir, "ffe-wb")
-        args.model = models[0]
-        args.model_path = model_paths[args.dataset]["whitebox"]
+        args.output = args.output
+        args.model = args.model
+        args.model_path = args.model_path
         poison_test.main(args)
 
         # black box attacks
-        args.output = os.path.join(out_dir, "ffe-bb")
+        # args.output = os.path.join(out_dir, "ffe-bb")
 
-        args.model = models[1]
-        args.model_path = model_paths[args.dataset]["blackbox"][0]
-        poison_test.main(args)
+        # args.model = models[1]
+        # args.model_path = model_paths[args.dataset]["blackbox"][0]
+        # poison_test.main(args)
 
-        args.model_path = model_paths[args.dataset]["blackbox"][1]
-        args.model = models[2]
-        poison_test.main(args)
+        # args.model_path = model_paths[args.dataset]["blackbox"][1]
+        # args.model = models[2]
+        # poison_test.main(args)
 
-    else:
-        print(
-            f"Testing poisons from {args.poisons_path}, in the from scratch training "
-            f"setting...\n"
-        )
+    # else:
+    #     print(
+    #         f"Testing poisons from {args.poisons_path}, in the from scratch training "
+    #         f"setting...\n"
+    #     )
 
-        ####################################################
-        #           From Scratch Training (fst)
-        args.model_path = None
-        args.output = os.path.join(out_dir, "fst")
+    #     ####################################################
+    #     #           From Scratch Training (fst)
+    #     args.model_path = None
+    #     args.output = os.path.join(out_dir, "fst")
 
-        if args.dataset.lower() == "cifar10":
-            print(f"From Scratch testing for {args.dataset}")
-            args.model = "resnet18"
-            poison_test.main(args)
+    #     if args.dataset.lower() == "cifar10":
+    #         print(f"From Scratch testing for {args.dataset}")
+    #         args.model = "resnet18"
+    #         poison_test.main(args)
 
-            args.model = "MobileNetV2"
-            poison_test.main(args)
+    #         args.model = "MobileNetV2"
+    #         poison_test.main(args)
 
-            args.model = "VGG11"
-            poison_test.main(args)
+    #         args.model = "VGG11"
+    #         poison_test.main(args)
 
-        else:
-            print(f"From Scratch testing for {args.dataset}")
-            args.model = "vgg16"
-            poison_test.main(args)
+        # else:
+        #     print(f"From Scratch testing for {args.dataset}")
+        #     args.model = "vgg16"
+        #     poison_test.main(args)
 
 
-if __name__ == "__main__":
 
+def main2(passed_args):
     parser = argparse.ArgumentParser(description="PyTorch poison benchmarking")
     parser.add_argument(
         "--from_scratch", action="store_true", help="Train from scratch with poisons?"
@@ -93,12 +88,21 @@ if __name__ == "__main__":
     parser.add_argument(
         "--poisons_path", type=str, required=True, help="where are the poisons?"
     )
+    parser.add_argument(
+        "--model", type=str, required=True,
+    )
+    parser.add_argument(
+        "--model_path", type=str, required=True,
+    )
     parser.add_argument("--dataset", type=str, required=True,
                         help="dataset")
     parser.add_argument(
         "--output", default="output_default", type=str, help="output subdirectory"
     )
+    parser.add_argument(
+        "--target_img_idx", type=int, required=True,
+    )
 
-    args = parser.parse_args()
+    args = parser.parse_args(passed_args)
     set_defaults(args)
     main(args)
