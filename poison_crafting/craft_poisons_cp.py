@@ -11,7 +11,7 @@
 ############################################################
 import argparse
 import os
-import pickle
+import pickle5 as pickle
 import sys
 
 sys.path.append(os.path.realpath("."))
