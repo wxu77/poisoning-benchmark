@@ -162,13 +162,16 @@ def main(args):
         now(), " Training ended at epoch ", epoch, ", Natural accuracy: ", natural_acc
     )
     net.eval()
-    p_acc = net(target_img.unsqueeze(0).to(device)).max(1)[1].item() == poisoned_label
+    p_probs = nn.Softmax(dim=1)(net(target_img.unsqueeze(0).to(device)))
+    acc_confidence, acc_prediction = p_probs.max(1)
+    p_confidence = p_probs[0][poisoned_label]
+    target_confidence = p_probs[0][target_class]
 
     print(
         now(), " poison success: ",
         p_acc, " poisoned_label: ",
         poisoned_label, " prediction: ",
-        net(target_img.unsqueeze(0).to(device)).max(1)[1].item(),
+        acc_prediction.item(),
     )
 
     # Dictionary to write contest the csv file
@@ -185,6 +188,10 @@ def main(args):
             ("training_acc", acc),
             ("natural_acc", natural_acc),
             ("poison_acc", p_acc),
+            ("acc_prediction", acc_prediction.item()),
+            ("acc_confidence", acc_confidence.item()),
+            ("poison_confidence", p_confidence.item()),
+            ("target_confidence", target_confidence.item()),
             ("target_id", args.target_img_idx),
         ]
     )
