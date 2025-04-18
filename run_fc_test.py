@@ -30,7 +30,7 @@ def get_random_base_indices(dataset: str, poison_class: int, num_poisons: int):
 def main(args):
     # Determine paths
     poisons_path = os.path.join(args.output_path, "poisons", args.model, args.dataset, args.pretrain_dataset, str(args.target_id), str(args.poison_class))
-    output_path = os.path.join(args.output_path, "logs", str(args.dist_rank))
+    output_path = os.path.join(args.output_path, "logs", args.dist_rank)
 
     # Generate the poisons
     fc_args = [
@@ -73,7 +73,7 @@ if __name__ == "__main__":
     parser.add_argument("--num_poisons", type=int)
     parser.add_argument("--target_id", type=int)
     parser.add_argument("--poison_class", type=int)
-    parser.add_argument("--dist_rank", type=int)
+    parser.add_argument("--dist_rank", type=str)
 
     args = parser.parse_args()
     main(args)
