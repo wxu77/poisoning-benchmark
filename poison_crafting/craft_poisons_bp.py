@@ -10,7 +10,7 @@
 ############################################################
 import argparse
 import os
-import pickle5 as pickle
+import pickle
 import sys
 
 import torch.backends.cudnn as cudnn

@@ -43,7 +43,7 @@ The setups file can be opened and loaded, and the output files can be saved with
 
 With PyTorch:
 ```
-    import pickle5 as pickle
+    import pickle
     from torchvision import datasets, transforms
 
     with open("poison_setups/cifar10_transfer_learning.pickle", "rb") as handle:
@@ -103,7 +103,7 @@ With TensorFlow:
 ```
     import numpy as np
     import tensorflow as tf
-    import pickle5 as pickle
+    import pickle
     from PIL import Image
 
     with open("poison_setups/cifar10_transfer_learning.pickle", "rb") as handle:
