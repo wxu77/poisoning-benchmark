@@ -17,8 +17,8 @@ import torch.backends.cudnn as cudnn
 import torchvision
 import torchvision.transforms as transforms
 
-sys.path.append(os.path.realpath("."))
-from Bullseye.trainer import make_convex_polytope_poisons
+# sys.path.append(os.path.realpath("."))
+from poison_crafting.Bullseye.trainer import make_convex_polytope_poisons
 from learning_module import now, data_mean_std_dict, get_transform, to_log_file
 from learning_module import TINYIMAGENET_ROOT, un_normalize_data, load_model_from_checkpoint
 from models import *
@@ -234,7 +234,7 @@ def main(args):
     return
 
 
-if __name__ == "__main__":
+def main2(passed_args):
 
     parser = argparse.ArgumentParser(description="Bullseye Polytope Poison Attack")
     parser.add_argument(
@@ -322,7 +322,7 @@ if __name__ == "__main__":
         "--base_indices", nargs="+", default=None, type=int, help="which base images"
     )
 
-    args = parser.parse_args()
+    args = parser.parse_args(passed_args)
 
     if args.target_model_path == None:
         args.target_model_path = args.model_path

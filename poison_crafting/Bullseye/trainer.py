@@ -3,10 +3,10 @@ from torch import nn
 import numpy as np
 import time
 import sys
-from Bullseye import SignedAdam
+from poison_crafting.Bullseye import SignedAdam
 import os
-from Bullseye.utils import get_poison_tuples
-from Bullseye.dataloader import PoisonedDataset, FeatureSet
+from poison_crafting.Bullseye.utils import get_poison_tuples
+from poison_crafting.Bullseye.dataloader import PoisonedDataset, FeatureSet
 import torchvision
 import torchvision.transforms as transforms
 
